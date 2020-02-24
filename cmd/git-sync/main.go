@@ -67,6 +67,10 @@ var flPassword = flag.String("password", envString("GIT_SYNC_PASSWORD", ""),
 var flSSH = flag.Bool("ssh", envBool("GIT_SYNC_SSH", false),
 	"use SSH for git operations")
 
+// log level can be used to pass verbose logging level eg: -v=1
+var flLogLevel = flag.String("v", envString("LOG_LEVEL", "0"),
+	"verbose logging level")
+
 var log = newLoggerOrDie()
 
 func newLoggerOrDie() logr.Logger {
@@ -123,7 +127,9 @@ func envFloat(key string, def float64) float64 {
 
 func main() {
 	setFlagDefaults()
-
+	if *flLogLevel != "" {
+		flag.Set("v",*flLogLevel)
+	}
 	flag.Parse()
 	if *flRepo == "" {
 		fmt.Fprintf(os.Stderr, "ERROR: --repo or $GIT_SYNC_REPO must be provided\n")
