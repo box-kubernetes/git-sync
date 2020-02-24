@@ -671,7 +671,7 @@ func syncRepo(ctx context.Context, repo, branch, rev string, depth int, gitRoot,
 			return false, "", err
 		}
 		if local == remote {
-			log.V(1).Info("no update required", "rev", rev, "local", local, "remote", remote)
+			log.V(0).Info("no update required", "rev", rev, "local", local, "remote", remote)
 			return false, "", nil
 		}
 		log.V(0).Info("update required", "rev", rev, "local", local, "remote", remote)
